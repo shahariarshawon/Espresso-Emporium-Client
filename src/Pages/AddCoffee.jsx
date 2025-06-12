@@ -31,7 +31,7 @@ const AddCoffee = () => {
     icon: 'success',
     title: `${coffeeData.name} added successfully!`,
     showConfirmButton: false,
-    timer: 3000,
+    timer: 1500,
     timerProgressBar: true,
     didOpen: (toast) => {
       toast.addEventListener('mouseenter', Swal.stopTimer);
