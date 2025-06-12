@@ -1,7 +1,32 @@
 import React from "react";
+import { Link } from "react-router";
+import Swal from "sweetalert2";
 
 const CoffeeCard = ({ coffee }) => {
-  const { name, chef, supplier, taste, category, price, photoURL } = coffee;
+  const {_id, name, chef, supplier, taste, category, price, photoURL } = coffee;
+  const handleDeleteCoffee=(_id)=>{
+    Swal.fire({
+  title: "Are you sure?",
+  text: "You won't be able to revert this!",
+  icon: "warning",
+  showCancelButton: true,
+  confirmButtonColor: "#3085d6",
+  cancelButtonColor: "#d33",
+  confirmButtonText: "Yes, delete it!"
+}).then((result) => {
+  if (result.isConfirmed) {
+    Swal.fire({
+      title: "Deleted!",
+      text: "Your file has been deleted.",
+      icon: "success"
+     
+    });
+     console.log(_id, "has been deleted");
+  }
+  
+});
+
+  }
   return (
     <div>
       <div className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-xl transition w-full p-10 flex justify-between items-center">
@@ -23,9 +48,9 @@ const CoffeeCard = ({ coffee }) => {
           <p className="text-md text-indigo-600 font-bold mt-3">${price}</p>
         </div>
         <div className="join join-vertical space-y-5">
-          <button className="btn join-item">View</button>
-          <button className="btn join-item">Edit</button>
-          <button className="btn join-item">Delete</button>
+          <Link to={`/coffee-details/${coffee._id}`} className="btn join-item">View</Link>
+          <Link  className="btn join-item">Edit</Link>
+          <Link onClick={()=>handleDeleteCoffee(_id)}  className="btn join-item">Delete</Link>
         </div>
       </div>
     </div>
