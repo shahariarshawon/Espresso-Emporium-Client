@@ -1,32 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 
 const CoffeeCard = ({ coffee }) => {
-  const {_id, name, chef, supplier, taste, category, price, photoURL } = coffee;
-  const handleDeleteCoffee=(_id)=>{
+  //usestate for instant data loading after deletion
+  const [isCoffee, setIsCoffee] = useState();
+  const { _id, name, chef, supplier, taste, category, price, photoURL } =
+    coffee;
+  //deleting coffee functionalities
+  const handleDeleteCoffee = (_id) => {
     Swal.fire({
-  title: "Are you sure?",
-  text: "You won't be able to revert this!",
-  icon: "warning",
-  showCancelButton: true,
-  confirmButtonColor: "#3085d6",
-  cancelButtonColor: "#d33",
-  confirmButtonText: "Yes, delete it!"
-}).then((result) => {
-  if (result.isConfirmed) {
-    Swal.fire({
-      title: "Deleted!",
-      text: "Your file has been deleted.",
-      icon: "success"
-     
-    });
-     console.log(_id, "has been deleted");
-  }
-  
-});
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        //deleting method
+        fetch(`http://localhost:3000/add-coffee/${_id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("after delete", data);
+          });
 
-  }
+        const remainingCoffee = isCoffee.filter((cof) => cof._id !== _id);
+        setIsCoffee(remainingCoffee);
+        //delete confirming sweetalert
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your file has been deleted.",
+          icon: "success",
+        });
+        console.log(_id, "has been deleted");
+      }
+    });
+  };
   return (
     <div>
       <div className="bg-white shadow-md rounded-xl overflow-hidden hover:shadow-xl transition w-full p-10 flex justify-between items-center">
@@ -48,9 +61,18 @@ const CoffeeCard = ({ coffee }) => {
           <p className="text-md text-indigo-600 font-bold mt-3">${price}</p>
         </div>
         <div className="join join-vertical space-y-5">
-          <Link to={`/coffee-details/${coffee._id}`} className="btn join-item">View</Link>
-          <Link  className="btn join-item">Edit</Link>
-          <Link onClick={()=>handleDeleteCoffee(_id)}  className="btn join-item">Delete</Link>
+          <Link to={`/coffee-details/${coffee._id}`} className="btn join-item">
+            View
+          </Link>
+          <Link to={`/update-coffee/${_id}`} className="btn join-item">
+            Edit
+          </Link>
+          <Link
+            onClick={() => handleDeleteCoffee(_id)}
+            className="btn join-item"
+          >
+            Delete
+          </Link>
         </div>
       </div>
     </div>

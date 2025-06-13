@@ -1,48 +1,42 @@
-import React from "react";
-import { Link } from "react-router";
-import Swal from "sweetalert2";
+import React from 'react';
+import { Link, useLoaderData } from 'react-router';
+import Swal from 'sweetalert2';
 
-const AddCoffee = () => {
-    const handleAddCoffee=(e)=>{
-        //getting the form data
+const UpdateCofeePage = () => {
+    const {_id, name, price, taste, chef, category, supplier, photoURL} = useLoaderData();
+    
+    const handleUpdateCoffee=(e)=>{
         e.preventDefault()
         const form=e.target;
         const formData=new FormData (form);
-        const coffeeData=Object.fromEntries(formData.entries())
-        console.log(coffeeData);
-        //sending the data to the database
-        fetch('http://localhost:3000/add-coffee',{
-            method:'POST',
+        const updatedCoffee=Object.fromEntries(formData.entries())
+        console.log(updatedCoffee);
+        fetch(`http://localhost:3000/add-coffee/${_id}`,{
+            method:'PUT',
             headers:{
-              'content-type':'application/json'
+                'content-type': 'application/json'
             },
-            body:JSON.stringify(coffeeData)
-        }
-        )
+            body:JSON.stringify(updatedCoffee)
+        })
         .then(res=>res.json())
         .then(data=>{
-            // console.log(data);
-            if(data.insertedId)
+            // console.log("after update",data);
+            if(data.modifiedCount)
             {
-                 Swal.fire({
-    toast: true,
-    position: 'top-end', // top-right corner
-    icon: 'success',
-    title: `${coffeeData.name} added successfully!`,
-    showConfirmButton: false,
-    timer: 1500,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer);
-      toast.addEventListener('mouseleave', Swal.resumeTimer);
-    }
-  });
+                Swal.fire({
+                    position: 'top-end',
+                    icon:'success',
+                    title:'COffee has been updated',
+                    timer:1500,
+                    showConfirmButton:false
+                })
             }
         })
-
     }
-  return (
-     <div className="min-h-screen bg-[#f3f4f6] py-10 px-4">
+    return (
+        <div>
+            Coffee will be updated here...
+            <div className="min-h-screen bg-[#f3f4f6] py-10 px-4">
       <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-2xl p-10">
         <div className="mb-6">
           <Link
@@ -54,13 +48,13 @@ const AddCoffee = () => {
         </div>
 
         <h2 className="text-4xl font-bold text-center mb-2 text-gray-800">
-          Add a Coffee
+          Update a Coffee
         </h2>
         <p className="text-center text-gray-500 mb-10">
-          Fill the form to add a new coffee to the collection.
+          Update the coffee by your needs.
         </p>
 
-        <form onSubmit={handleAddCoffee} className="space-y-6">
+        <form onSubmit={handleUpdateCoffee} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block mb-1 font-medium text-gray-700">
@@ -69,6 +63,7 @@ const AddCoffee = () => {
               <input
                 type="text"
                 name="name"
+                defaultValue={name}
                 className="w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
                 placeholder="Enter coffee name"
                 required
@@ -82,6 +77,7 @@ const AddCoffee = () => {
               <input
                 type="text"
                 name="chef"
+                defaultValue={chef}
                 className="w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
                 placeholder="Enter chef's name"
                 required
@@ -95,6 +91,7 @@ const AddCoffee = () => {
               <input
                 type="text"
                 name="supplier"
+                defaultValue={supplier}
                 className="w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
                 placeholder="Enter supplier name"
                 required
@@ -108,6 +105,7 @@ const AddCoffee = () => {
               <input
                 type="text"
                 name="taste"
+                defaultValue={taste}
                 className="w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
                 placeholder="Enter taste description"
               />
@@ -120,6 +118,7 @@ const AddCoffee = () => {
               <input
                 type="text"
                 name="category"
+                defaultValue={category}
                 className="w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
                 placeholder="Enter category"
               />
@@ -132,6 +131,7 @@ const AddCoffee = () => {
               <input
                 type="number"
                 name="price"
+                defaultValue={price}
                 className="w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
                 placeholder="Enter price"
                 required
@@ -146,6 +146,7 @@ const AddCoffee = () => {
             <input
               type="text"
               name="photoURL"
+              defaultValue={photoURL}
               className="w-full border rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-400"
               placeholder="Enter image URL"
             />
@@ -155,12 +156,13 @@ const AddCoffee = () => {
             type="submit"
             className="w-full bg-indigo-600 text-white py-3 rounded-md hover:bg-indigo-700 transition text-lg font-medium"
           >
-            Add Coffee
+            Update Coffee
           </button>
         </form>
       </div>
     </div>
-  );
+        </div>
+    );
 };
 
-export default AddCoffee;
+export default UpdateCofeePage;

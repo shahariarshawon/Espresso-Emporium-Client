@@ -3,6 +3,7 @@ import MainLayout from "../Layouts/MainLayout";
 import AddCoffee from "../Pages/AddCoffee";
 import HomePage from "../Pages/HomePage";
 import CoffeeDetails from "../Pages/CoffeeDetails";
+import UpdateCofeePage from "../Pages/UpdateCofeePage";
 
 
 const router=createBrowserRouter(
@@ -23,9 +24,14 @@ const router=createBrowserRouter(
                     Component:AddCoffee
                 },
                 {
-                    path:'coffee-details/:_id',
+                    path:'/coffee-details/:id',
                     Component:CoffeeDetails,
-                    loader:()=>fetch('http://localhost:3000/add-coffee'),
+                    loader:({params})=>fetch(`http://localhost:3000/add-coffee/${params.id}`)
+                },
+                {
+                    path:'/update-coffee/:id',
+                    Component:UpdateCofeePage,
+                    loader:({params})=>fetch(`http://localhost:3000/add-coffee/${params.id}`)
                 }
             ]
         },
