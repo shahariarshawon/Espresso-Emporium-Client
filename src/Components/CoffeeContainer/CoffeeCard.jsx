@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 
-const CoffeeCard = ({ coffee }) => {
+const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
   //usestate for instant data loading after deletion
-  const [isCoffee, setIsCoffee] = useState();
   const { _id, name, chef, supplier, taste, category, price, photoURL } =
     coffee;
   //deleting coffee functionalities
@@ -28,8 +27,8 @@ const CoffeeCard = ({ coffee }) => {
             console.log("after delete", data);
           });
 
-        const remainingCoffee = isCoffee.filter((cof) => cof._id !== _id);
-        setIsCoffee(remainingCoffee);
+        const remainingCoffee = coffees.filter((cof) => cof._id !== _id);
+        setCoffees(remainingCoffee);
         //delete confirming sweetalert
         Swal.fire({
           title: "Deleted!",

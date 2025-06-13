@@ -1,8 +1,9 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 
 const AddCoffee = () => {
+  const navigate=useNavigate();
     const handleAddCoffee=(e)=>{
         //getting the form data
         e.preventDefault()
@@ -24,6 +25,7 @@ const AddCoffee = () => {
             // console.log(data);
             if(data.insertedId)
             {
+              navigate('/');
                  Swal.fire({
     toast: true,
     position: 'top-end', // top-right corner

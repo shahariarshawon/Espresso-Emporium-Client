@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link, useLoaderData } from 'react-router';
+import { Link, useLoaderData, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 
 const UpdateCofeePage = () => {
+    const navigate=useNavigate();
     const {_id, name, price, taste, chef, category, supplier, photoURL} = useLoaderData();
     
     const handleUpdateCoffee=(e)=>{
@@ -23,6 +24,9 @@ const UpdateCofeePage = () => {
             // console.log("after update",data);
             if(data.modifiedCount)
             {
+                //sending to the homepage
+                navigate('/');
+                //sweetalert
                 Swal.fire({
                     position: 'top-end',
                     icon:'success',

@@ -4,6 +4,8 @@ import AddCoffee from "../Pages/AddCoffee";
 import HomePage from "../Pages/HomePage";
 import CoffeeDetails from "../Pages/CoffeeDetails";
 import UpdateCofeePage from "../Pages/UpdateCofeePage";
+import Login from "../Pages/Login";
+import SignIn from "../Pages/SignIn";
 
 
 const router=createBrowserRouter(
@@ -32,6 +34,14 @@ const router=createBrowserRouter(
                     path:'/update-coffee/:id',
                     Component:UpdateCofeePage,
                     loader:({params})=>fetch(`http://localhost:3000/add-coffee/${params.id}`)
+                },
+                {
+                    path:'/login',
+                    Component:Login
+                },
+                {
+                    path:'/signin',
+                    Component:SignIn
                 }
             ]
         },

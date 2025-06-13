@@ -3,6 +3,7 @@ import { Link, useLoaderData } from 'react-router';
 
 const CoffeeDetails = () => {
     const {name, price, taste, chef, category, supplier, photoURL}=useLoaderData();
+    
     return (
         <div>
              <div className="min-h-screen bg-[#f3f4f6] py-10 px-4">
