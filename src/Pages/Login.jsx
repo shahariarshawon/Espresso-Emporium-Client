@@ -1,9 +1,15 @@
-import React from "react";
+import React, { use } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../Context/AuthContext";
 
 const Login = () => {
+  const {email}=use(AuthContext)
+  console.log(email);
   return (
     <div>
+      <div>
+        <p className="text-3xl">{email}</p>
+      </div>
       <div className="card bg-base-100 mx-auto my-[10%] max-w-sm shrink-0 shadow-2xl">
         <div className="card-body">
             <h2 className="text-4xl">Login </h2>
